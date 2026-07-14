@@ -893,84 +893,76 @@
     color: var(--accent);
   }
 
-  /* ═══ PROPOSALS EXPANDING CARDS ═══ */
-  .proposals-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    max-width: 1100px;
-    margin: 0 auto;
+  /* ═══ PROPOSALS CARD STACK ═══ */
+  .proposals-stack {
+    position: relative;
+    width: 320px;
+    height: 420px;
+    margin: 0 auto 40px;
+    perspective: 1000px;
   }
   .proposal-card {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
     background: var(--card);
     backdrop-filter: blur(12px);
     border: 1px solid var(--card-border);
     border-radius: 20px;
     overflow: hidden;
     cursor: pointer;
-    position: relative;
-    transition: transform 0.5s cubic-bezier(0.22,1,0.36,1),
-                box-shadow 0.5s cubic-bezier(0.22,1,0.36,1);
-  }
-  .proposal-card:nth-child(2),
-  .proposal-card:nth-child(5) {
-    transform: translateY(24px);
-  }
-  .proposal-card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 24px 60px rgba(196,151,59,0.12);
-    border-color: rgba(196,151,59,0.2);
-  }
-  .proposal-card:nth-child(2):hover,
-  .proposal-card:nth-child(5):hover {
-    transform: translateY(16px) scale(1.02);
+    transition: all 0.6s cubic-bezier(0.22,1,0.36,1);
+    transform-origin: center bottom;
+    box-shadow: 0 8px 24px rgba(26,26,24,0.08);
   }
   .proposal-card img {
     width: 100%;
     aspect-ratio: 4/3;
     object-fit: cover;
     display: block;
-    transition: transform 0.6s cubic-bezier(0.22,1,0.36,1);
-  }
-  .proposal-card:hover img {
-    transform: scale(1.05);
   }
   .proposal-card .pp-label {
     padding: 16px 20px;
     font-family: var(--serif);
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     color: var(--ink);
     line-height: 1.5;
     text-align: center;
-    transition: color 0.3s;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.4s, transform 0.4s;
+  }
+  /* Stack positions - fan out */
+  .proposal-card:nth-child(1) { z-index: 1; transform: rotate(-6deg) translateY(12px); }
+  .proposal-card:nth-child(2) { z-index: 2; transform: rotate(-3deg) translateY(8px); }
+  .proposal-card:nth-child(3) { z-index: 3; transform: rotate(0deg) translateY(4px); }
+  .proposal-card:nth-child(4) { z-index: 4; transform: rotate(3deg) translateY(8px); }
+  .proposal-card:nth-child(5) { z-index: 5; transform: rotate(6deg) translateY(12px); }
+  .proposal-card:nth-child(6) { z-index: 6; transform: rotate(9deg) translateY(16px); }
+
+  /* Hover: pull card up and out */
+  .proposal-card:hover {
+    transform: rotate(0deg) translateY(-30px) scale(1.08) !important;
+    z-index: 20 !important;
+    box-shadow: 0 32px 64px rgba(26,26,24,0.15), 0 0 0 2px rgba(196,151,59,0.2);
   }
   .proposal-card:hover .pp-label {
-    color: var(--accent);
-  }
-  /* Overlay shimmer on hover */
-  .proposal-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      135deg,
-      transparent 30%,
-      rgba(196,151,59,0.06) 50%,
-      transparent 70%
-    );
-    opacity: 0;
-    z-index: 1;
-    pointer-events: none;
-    transition: opacity 0.4s;
-  }
-  .proposal-card:hover::before {
     opacity: 1;
+    transform: translateY(0);
   }
+
+  /* Other cards retreat when one is hovered */
+  .proposals-stack:hover .proposal-card:not(:hover) {
+    opacity: 0.6;
+    filter: brightness(0.95);
+  }
+
   @media (max-width: 768px) {
-    .proposals-grid { grid-template-columns: 1fr; }
-    .proposal-card:nth-child(2),
-    .proposal-card:nth-child(5) { transform: none; }
+    .proposals-stack {
+      width: 280px;
+      height: 380px;
+    }
   }
 
   /* ═══ SKILL PROGRESS BAR + GLOW ═══ */
@@ -1007,6 +999,35 @@
   }
   .skill-card.highlight .skill-bar {
     background: rgba(255,255,255,0.08);
+  }
+
+
+  /* ═══ INTERACTION HINTS ═══ */
+  .section-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 48px;
+    opacity: 0.4;
+    transition: opacity 0.5s;
+  }
+  .section-hint:hover {
+    opacity: 0.7;
+  }
+  .section-hint .hint-icon {
+    font-size: 0.75rem;
+    animation: hintPulse 2s ease-in-out infinite;
+  }
+  @keyframes hintPulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.15); }
+  }
+  .section-hint .hint-text {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    color: var(--ink-ghost);
   }
 
   /* ═══ REVEAL ═══ */
@@ -1179,6 +1200,10 @@
       </ul>
     </div>
   </div>
+  <div class="section-hint">
+    <span class="hint-icon">📊</span>
+    <span class="hint-text">GPA 与排名数字滚动计数 · 卡片悬停微浮</span>
+  </div>
 </section>
 
 <!-- Divider -->
@@ -1229,6 +1254,10 @@
       <div class="skill-desc">熟练运用 ChatGPT、Claude、Gemini、Grok 等生成式 AI 工具，应用于文案策划、PPT 制作、资料整理、数据分析及 Prompt 设计；持续实践 Vibe Coding（AI 辅助开发）工作流，借助 AI 独立完成个人网站开发。</div>
       <div class="skill-bar"><div class="skill-bar-fill" data-width="92"></div></div>
     </div>
+  </div>
+  <div class="section-hint">
+    <span class="hint-icon">✨</span>
+    <span class="hint-text">滚动触发进度条动画 · 悬停卡片查看金色光效</span>
   </div>
 </section>
 
@@ -1439,6 +1468,10 @@
       </div>
     </div>
   </div>
+  <div class="section-hint">
+    <span class="hint-icon">🃏</span>
+    <span class="hint-text">悬停卡片翻面查看奖项详情 · 点击可查看大图</span>
+  </div>
 </section>
 
 <!-- Divider -->
@@ -1623,6 +1656,10 @@
     <button class="carousel-arrow carousel-next" id="carouselNext">›</button>
   </div>
   <div class="carousel-dots" id="carouselDots"></div>
+  <div class="section-hint">
+    <span class="hint-icon">▶</span>
+    <span class="hint-text">自动轮播中 · 悬停暂停 · 左右箭头或滑动切换 · 点击查看大图</span>
+  </div>
 </section>
 
 <!-- Divider -->
@@ -1638,7 +1675,7 @@
     <div class="section-line"></div>
   </div>
   <p class="section-desc reveal">作为学生代表团副团长，累计撰写 25+ 份正式提案，推动近 80% 提案得到落实。以下为部分代表性提案。</p>
-  <div class="proposals-grid">
+  <div class="proposals-stack">
     <div class="proposal-card" data-group="proposals">
       <img src="images/proposals/01-提案开放日策划案.jpg" alt="提案开放日策划案" loading="lazy">
       <div class="pp-label">提案开放日策划案</div>
@@ -1663,6 +1700,10 @@
       <img src="images/proposals/06-设置外卖架建议.png" alt="关于设置外卖架的建议" loading="lazy">
       <div class="pp-label">关于设置外卖架的建议</div>
     </div>
+  </div>
+  <div class="section-hint">
+    <span class="hint-icon">🎴</span>
+    <span class="hint-text">悬停抽出提案卡牌 · 点击查看提案全文</span>
   </div>
 </section>
 
@@ -1696,6 +1737,10 @@
       <img src="images/articles/02-公众号推文4.jpg" alt="公众号推文 4" loading="lazy">
       <div class="art-label">公众号推文 — 作品 4</div>
     </div>
+  </div>
+  <div class="section-hint">
+    <span class="hint-icon">👆</span>
+    <span class="hint-text">悬停查看聚光灯效果 · 点击查看推文大图</span>
   </div>
 </section>
 
@@ -2155,16 +2200,7 @@
     });
   });
 
-  // ═══ Proposal Cards Hover Glow ═══
-  document.querySelectorAll('.proposal-card').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width * 100);
-      const y = ((e.clientY - rect.top) / rect.height * 100);
-      card.style.setProperty('--mx', x + '%');
-      card.style.setProperty('--my', y + '%');
-    });
-  });
+
 
   // ═══ Award Flip Cards - prevent lightbox on flip ═══
   document.querySelectorAll('.award-card').forEach(card => {
