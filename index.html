@@ -940,60 +940,34 @@
     transition: opacity 0.4s 0.1s, transform 0.4s 0.1s;
   }
 
-  /* ===== FAN POSITIONS - wide arc, cards spread out ===== */
-  .proposal-card:nth-child(1) {
-    z-index: 1;
-    transform: rotate(-60deg) translateX(-180px);
-  }
-  .proposal-card:nth-child(2) {
-    z-index: 2;
-    transform: rotate(-36deg) translateX(-100px);
-  }
-  .proposal-card:nth-child(3) {
-    z-index: 3;
-    transform: rotate(-12deg) translateX(-20px);
-  }
-  .proposal-card:nth-child(4) {
-    z-index: 4;
-    transform: rotate(12deg) translateX(20px);
-  }
-  .proposal-card:nth-child(5) {
-    z-index: 5;
-    transform: rotate(36deg) translateX(100px);
-  }
-  .proposal-card:nth-child(6) {
-    z-index: 6;
-    transform: rotate(60deg) translateX(180px);
-  }
+  /* ===== FAN POSITIONS ===== */
+  .proposal-card:nth-child(1) { z-index: 1; transform: rotate(-40deg) translateX(-140px); }
+  .proposal-card:nth-child(2) { z-index: 2; transform: rotate(-24deg) translateX(-70px); }
+  .proposal-card:nth-child(3) { z-index: 3; transform: rotate(-8deg) translateX(0px); }
+  .proposal-card:nth-child(4) { z-index: 4; transform: rotate(8deg) translateX(0px); }
+  .proposal-card:nth-child(5) { z-index: 5; transform: rotate(24deg) translateX(70px); }
+  .proposal-card:nth-child(6) { z-index: 6; transform: rotate(40deg) translateX(140px); }
 
-  /* ===== HOVER: card rises up, straightens, gets big ===== */
+  /* ===== HOVER: just enlarge in place, no position change ===== */
   .proposal-card:hover {
-    transform: rotate(0deg) translateX(0) translateY(-80px) scale(1.18) !important;
+    transform: scale(1.2) translateY(-40px) !important;
     z-index: 20 !important;
-    box-shadow: 0 40px 80px rgba(26,26,24,0.2), 0 0 0 2px rgba(196,151,59,0.3);
-    opacity: 1 !important;
-    filter: none !important;
+    box-shadow: 0 32px 64px rgba(26,26,24,0.18), 0 0 0 2px rgba(196,151,59,0.25);
   }
   .proposal-card:hover .pp-label {
     opacity: 1;
     transform: translateY(0);
   }
 
-  /* ===== Non-hovered cards: slight dim when any card hovered ===== */
-  .proposals-stack:has(.proposal-card:hover) .proposal-card:not(:hover) {
-    opacity: 0.35;
-    filter: brightness(0.88) blur(2px);
-  }
-
   @media (max-width: 900px) {
     .proposals-stack { height: 420px; }
     .proposal-card { width: 220px; margin-left: -110px; margin-top: -150px; }
-    .proposal-card:nth-child(1) { transform: rotate(-50deg) translateX(-120px); }
-    .proposal-card:nth-child(2) { transform: rotate(-30deg) translateX(-60px); }
-    .proposal-card:nth-child(3) { transform: rotate(-10deg) translateX(-10px); }
-    .proposal-card:nth-child(4) { transform: rotate(10deg) translateX(10px); }
-    .proposal-card:nth-child(5) { transform: rotate(30deg) translateX(60px); }
-    .proposal-card:nth-child(6) { transform: rotate(50deg) translateX(120px); }
+    .proposal-card:nth-child(1) { transform: rotate(-35deg) translateX(-100px); }
+    .proposal-card:nth-child(2) { transform: rotate(-21deg) translateX(-50px); }
+    .proposal-card:nth-child(3) { transform: rotate(-7deg) translateX(0); }
+    .proposal-card:nth-child(4) { transform: rotate(7deg) translateX(0); }
+    .proposal-card:nth-child(5) { transform: rotate(21deg) translateX(50px); }
+    .proposal-card:nth-child(6) { transform: rotate(35deg) translateX(100px); }
   }
 
   /* ═══ SKILL PROGRESS BAR + GLOW ═══ */
@@ -1970,7 +1944,8 @@
       scrollTrigger: {
         trigger: num,
         start: 'top 85%',
-        once: true
+        end: 'top 15%',
+        toggleActions: 'play none none reverse'
       },
       opacity: 0,
       x: -20,
@@ -1985,7 +1960,8 @@
       scrollTrigger: {
         trigger: title,
         start: 'top 85%',
-        once: true
+        end: 'top 15%',
+        toggleActions: 'play none none reverse'
       },
       opacity: 0,
       y: 40,
@@ -2001,7 +1977,8 @@
       scrollTrigger: {
         trigger: '.timeline-section',
         start: 'top 75%',
-        once: true
+        end: 'top 15%',
+        toggleActions: 'play none none reverse'
       },
       opacity: 0,
       x: -60,
@@ -2013,11 +1990,11 @@
 
   // ═══ Contact Section Animation ═══
   gsap.from('.contact-title', {
-    scrollTrigger: { trigger: '.contact-section', start: 'top 80%', once: true },
+    scrollTrigger: { trigger: '.contact-section', start: 'top 80%', end: 'top 20%', toggleActions: 'play none none reverse' },
     opacity: 0, y: 40, duration: 1, ease: 'power3.out'
   });
   gsap.from('.contact-subtitle', {
-    scrollTrigger: { trigger: '.contact-section', start: 'top 80%', once: true },
+    scrollTrigger: { trigger: '.contact-section', start: 'top 80%', end: 'top 20%', toggleActions: 'play none none reverse' },
     opacity: 0, y: 30, duration: 1, delay: 0.2, ease: 'power3.out'
   });
 
@@ -2028,7 +2005,8 @@
       scrollTrigger: {
         trigger: '.contact-section',
         start: 'top 80%',
-        once: true
+        end: 'top 20%',
+        toggleActions: 'play none none reverse'
       },
       opacity: 0,
       y: 50,
@@ -2195,26 +2173,29 @@
   eduStats.forEach(stat => {
     const valEl = stat.querySelector('.val');
     if (!valEl) return;
-    const text = valEl.textContent.trim();
+    const originalText = valEl.textContent.trim();
 
     ScrollTrigger.create({
       trigger: stat,
       start: 'top 85%',
-      once: true,
+      end: 'top 15%',
       onEnter: () => {
-        if (text === '4.0') {
+        if (originalText === '4.0') {
           animateCounter(valEl, 4.0, '');
-        } else if (text.includes('Top')) {
-          const num = parseInt(text.replace('Top ', '').replace('%', ''));
-          animateCounter(valEl, num, '%');
-          valEl.textContent = '0%';
+        } else if (originalText.includes('Top')) {
+          const num = parseInt(originalText.replace('Top ', '').replace('%', ''));
           const obj = { val: 0 };
           gsap.to(obj, {
             val: num, duration: 2, ease: 'power2.out',
             onUpdate: () => { valEl.textContent = 'Top ' + Math.round(obj.val) + '%'; }
           });
-        } else {
-          // Don't animate "2023-2027"
+        }
+      },
+      onLeaveBack: () => {
+        if (originalText === '4.0') {
+          valEl.textContent = '0.0';
+        } else if (originalText.includes('Top')) {
+          valEl.textContent = 'Top 0%';
         }
       }
     });
@@ -2226,10 +2207,9 @@
     ScrollTrigger.create({
       trigger: bar,
       start: 'top 90%',
-      once: true,
-      onEnter: () => {
-        gsap.to(bar, { width: width + '%', duration: 1.5, ease: 'power2.out', delay: 0.3 });
-      }
+      end: 'top 10%',
+      onEnter: () => { gsap.to(bar, { width: width + '%', duration: 1.5, ease: 'power2.out', delay: 0.3 }); },
+      onLeaveBack: () => { gsap.to(bar, { width: '0%', duration: 0.6, ease: 'power2.in' }); }
     });
   });
 
