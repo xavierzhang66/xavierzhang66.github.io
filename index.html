@@ -609,29 +609,29 @@
     will-change: transform, opacity;
   }
   .float-shape.s1 {
-    width: 320px; height: 320px;
-    background: radial-gradient(circle, rgba(196,151,59,0.06), transparent 70%);
-    top: 10%; left: -5%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(196,151,59,0.14), rgba(196,151,59,0.04) 40%, transparent 70%);
+    top: 5%; left: -8%;
   }
   .float-shape.s2 {
-    width: 200px; height: 200px;
-    background: radial-gradient(circle, rgba(196,151,59,0.04), transparent 70%);
-    top: 60%; right: -3%;
+    width: 350px; height: 350px;
+    background: radial-gradient(circle, rgba(196,151,59,0.12), rgba(196,151,59,0.03) 40%, transparent 70%);
+    top: 55%; right: -5%;
   }
   .float-shape.s3 {
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(26,26,24,0.02), transparent 65%);
-    top: 35%; left: 40%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(196,151,59,0.08), rgba(26,26,24,0.02) 40%, transparent 65%);
+    top: 30%; left: 35%;
   }
   .float-shape.s4 {
-    width: 150px; height: 150px;
-    background: radial-gradient(circle, rgba(196,151,59,0.05), transparent 70%);
-    bottom: 15%; left: 15%;
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, rgba(196,151,59,0.15), rgba(196,151,59,0.04) 40%, transparent 70%);
+    bottom: 10%; left: 10%;
   }
   .float-shape.s5 {
-    width: 250px; height: 250px;
-    background: radial-gradient(circle, rgba(196,151,59,0.03), transparent 65%);
-    bottom: 30%; right: 20%;
+    width: 420px; height: 420px;
+    background: radial-gradient(circle, rgba(196,151,59,0.10), rgba(196,151,59,0.03) 40%, transparent 65%);
+    bottom: 25%; right: 15%;
   }
 
   /* Particle dots */
@@ -664,6 +664,54 @@
   /* Magnetic hover on cards */
   .award-card, .project-img-card, .proposal-card, .article-card, .skill-card, .edu-card {
     will-change: transform;
+  }
+
+
+  /* ═══ CURSOR GLOW ═══ */
+  .cursor-glow {
+    position: fixed;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(196,151,59,0.12), transparent 65%);
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    will-change: transform;
+    mix-blend-mode: normal;
+  }
+
+  /* ═══ HERO TEXT REVEAL ═══ */
+  .hero-name .char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(80px) rotateX(-40deg);
+  }
+
+  /* ═══ MAGNETIC HOVER ENHANCED ═══ */
+  .award-card::before, .project-img-card::before, .proposal-card::before, .article-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%),
+      rgba(196,151,59,0.1), transparent 60%);
+    transition: opacity 0.3s;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .award-card:hover::before, .project-img-card:hover::before,
+  .proposal-card:hover::before, .article-card:hover::before {
+    opacity: 1;
+  }
+  .award-card, .project-img-card, .proposal-card, .article-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ═══ FLOATING BADGE ═══ */
+  .section-number {
+    display: inline-block;
   }
 
   /* ═══ REVEAL ═══ */
@@ -721,6 +769,7 @@
 <div class="particles-container" id="particles"></div>
 
 <div class="progress-bar" id="progressBar"></div>
+<div class="cursor-glow" id="cursorGlow"></div>
 
 <!-- Lightbox -->
 <div class="lightbox-overlay" id="lightbox">
@@ -1364,6 +1413,141 @@
     if (e.key === 'ArrowLeft') prevImage();
     if (e.key === 'ArrowRight') nextImage();
   });
+
+  // ═══ Cursor Glow Follow ═══
+  const cursorGlow = document.getElementById('cursorGlow');
+  let mouseX = 0, mouseY = 0;
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+  gsap.ticker.add(() => {
+    gsap.set(cursorGlow, { x: mouseX, y: mouseY });
+  });
+
+  // ═══ Hero Name Split Text Animation ═══
+  const heroName = document.querySelector('.hero-name');
+  if (heroName) {
+    const chars = heroName.textContent.split('');
+    heroName.innerHTML = chars.map(c =>
+      c === ' ' ? ' ' : `<span class="char">${c}</span>`
+    ).join('');
+
+    gsap.to('.hero-name .char', {
+      opacity: 1,
+      y: 0,
+      rotateX: 0,
+      duration: 1,
+      stagger: 0.08,
+      ease: 'back.out(1.7)',
+      delay: 0.6
+    });
+  }
+
+  // ═══ Hero Tagline Typewriter ═══
+  gsap.from('.hero-tagline', {
+    opacity: 0,
+    y: 30,
+    duration: 1.2,
+    delay: 1.8,
+    ease: 'power3.out'
+  });
+
+  // ═══ Section Number Counter Animation ═══
+  document.querySelectorAll('.section-number').forEach(num => {
+    gsap.from(num, {
+      scrollTrigger: {
+        trigger: num,
+        start: 'top 85%',
+        once: true
+      },
+      opacity: 0,
+      x: -20,
+      duration: 0.8,
+      ease: 'power3.out'
+    });
+  });
+
+  // ═══ Section Title Slide In ═══
+  document.querySelectorAll('.section-title').forEach(title => {
+    gsap.from(title, {
+      scrollTrigger: {
+        trigger: title,
+        start: 'top 85%',
+        once: true
+      },
+      opacity: 0,
+      y: 40,
+      duration: 1,
+      ease: 'power3.out'
+    });
+  });
+
+  // ═══ Timeline Items Stagger ═══
+  const timelineItems = document.querySelectorAll('.timeline-item');
+  if (timelineItems.length) {
+    gsap.from(timelineItems, {
+      scrollTrigger: {
+        trigger: '.timeline-section',
+        start: 'top 75%',
+        once: true
+      },
+      opacity: 0,
+      x: -60,
+      duration: 0.9,
+      stagger: 0.2,
+      ease: 'power3.out'
+    });
+  }
+
+  // ═══ Contact Cards Stagger ═══
+  const contactCards = document.querySelectorAll('.contact-card');
+  if (contactCards.length) {
+    gsap.from(contactCards, {
+      scrollTrigger: {
+        trigger: '.contact-section',
+        start: 'top 80%',
+        once: true
+      },
+      opacity: 0,
+      y: 50,
+      scale: 0.9,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: 'back.out(1.5)'
+    });
+  }
+
+  // ═══ Card Hover Spotlight ═══
+  document.querySelectorAll('.award-card, .project-img-card, .proposal-card, .article-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width * 100);
+      const y = ((e.clientY - rect.top) / rect.height * 100);
+      card.style.setProperty('--mx', x + '%');
+      card.style.setProperty('--my', y + '%');
+    });
+  });
+
+  // ═══ Hero Scroll Indicator Bounce ═══
+  gsap.to('.scroll-hint', {
+    y: -10,
+    duration: 1.5,
+    repeat: -1,
+    yoyo: true,
+    ease: 'sine.inOut'
+  });
+
+  // ═══ Nav Links Hover Effect ═══
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('mouseenter', () => {
+      gsap.to(link, { scale: 1.05, duration: 0.3, ease: 'power2.out' });
+    });
+    link.addEventListener('mouseleave', () => {
+      gsap.to(link, { scale: 1, duration: 0.3, ease: 'power2.out' });
+    });
+  });
+
 })();
 </script>
 </body>
