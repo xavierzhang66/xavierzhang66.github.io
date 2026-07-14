@@ -99,19 +99,16 @@
     font-family: var(--mono); font-size: 0.72rem; font-weight: 400;
     letter-spacing: 0.25em; text-transform: uppercase;
     color: var(--ink-ghost);
-    opacity: 0; animation: fadeUp 1s 0.3s cubic-bezier(0.22,1,0.36,1) forwards;
   }
   .hero-en-name {
     font-family: var(--serif-en); font-weight: 300; font-style: italic;
     font-size: clamp(1.1rem, 2.8vw, 1.8rem); letter-spacing: 0.15em;
     color: var(--accent); margin-bottom: 12px;
-    opacity: 0; animation: fadeUp 1s 0.45s cubic-bezier(0.22,1,0.36,1) forwards;
   }
   .hero-name {
     font-family: var(--serif); font-weight: 900;
     font-size: clamp(3rem, 10vw, 7.5rem); line-height: 1.05;
     letter-spacing: -0.02em; color: var(--ink); margin-bottom: 20px;
-    opacity: 0; animation: fadeUp 1.2s 0.5s cubic-bezier(0.22,1,0.36,1) forwards;
   }
   .hero-name .accent {
     color: var(--accent);
@@ -120,13 +117,11 @@
     font-family: var(--sans); font-weight: 300;
     font-size: clamp(1rem, 2.5vw, 1.35rem); color: var(--ink-muted);
     max-width: 520px; margin: 0 auto; line-height: 1.8;
-    opacity: 0; animation: fadeUp 1s 0.8s cubic-bezier(0.22,1,0.36,1) forwards;
   }
 
   .scroll-hint {
     position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
     display: flex; flex-direction: column; align-items: center; gap: 8px;
-    opacity: 0; animation: fadeUp 1s 1.2s cubic-bezier(0.22,1,0.36,1) forwards;
   }
   .scroll-hint span {
     font-family: var(--mono); font-size: 0.6rem;
@@ -174,16 +169,7 @@
     font-family: var(--serif-en); font-weight: 300;
     font-size: clamp(4rem, 15vw, 12rem); white-space: nowrap;
     user-select: none; will-change: transform; letter-spacing: 0.05em;
-    background: linear-gradient(
-      90deg,
-      rgba(26,26,24,0.09) 0%,
-      rgba(26,26,24,0.07) 30%,
-      rgba(26,26,24,0.03) 65%,
-      rgba(26,26,24,0) 100%
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: rgba(26,26,24,0.07);
   }
 
   /* ═══ EDUCATION ═══ */
@@ -1123,8 +1109,6 @@
       font-size: 0.62rem;
       letter-spacing: 0.18em;
       color: var(--accent);
-      opacity: 0;
-      animation: fadeUp 1s 0.35s cubic-bezier(0.22,1,0.36,1) forwards;
     ">a member of the Double First-Class Initiative</p>
     <p class="hero-en-name">Xavier Zhang</p>
     <h1 class="hero-name">张<span class="accent">煜</span>轩</h1>
@@ -1916,6 +1900,8 @@
       c === ' ' ? ' ' : `<span class="char">${c}</span>`
     ).join('');
 
+    // Set initial state
+    gsap.set('.hero-name .char', { opacity: 0, y: 80, rotateX: -40 });
     gsap.to('.hero-name .char', {
       opacity: 1,
       y: 0,
