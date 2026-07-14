@@ -149,7 +149,8 @@
     padding: clamp(80px, 12vh, 160px) clamp(24px, 8vw, 160px);
     position: relative;
   }
-  .section-header { margin-bottom: clamp(48px, 6vh, 80px); position: relative; }
+  .section-header { margin-bottom: clamp(48px, 6vh, 80px); position: relative; text-align: center; }
+  .section-header .section-line { margin-left: auto; margin-right: auto; }
   .section-number {
     font-family: var(--mono); font-size: 0.7rem; font-weight: 500;
     letter-spacing: 0.2em; color: var(--accent); margin-bottom: 12px; display: block;
@@ -187,7 +188,7 @@
 
   /* ═══ EDUCATION ═══ */
   .edu-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 32px; max-width: 1100px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 32px; max-width: 1100px; margin: 0 auto;
   }
   .edu-card {
     background: var(--card); backdrop-filter: blur(12px);
@@ -262,7 +263,7 @@
   /* ═══ SKILLS ═══ */
   .skills-grid {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 24px; max-width: 1100px;
+    gap: 24px; max-width: 1100px; margin: 0 auto;
   }
   .skill-card {
     background: var(--card); backdrop-filter: blur(12px);
@@ -299,7 +300,7 @@
   .skill-card.highlight .skill-desc { color: rgba(250,248,245,0.6); }
 
   /* ═══ TIMELINE ═══ */
-  .timeline-section { max-width: 900px; }
+  .timeline-section { max-width: 900px; margin: 0 auto; }
   .timeline-item {
     position: relative; padding-left: 48px; padding-bottom: 64px;
     border-left: 1px solid rgba(26,26,24,0.08);
@@ -341,7 +342,7 @@
   /* ═══ AWARDS GALLERY ═══ */
   .awards-grid {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px; max-width: 1200px;
+    gap: 20px; max-width: 1200px; margin: 0 auto;
   }
   .award-card {
     background: var(--card); backdrop-filter: blur(12px);
@@ -373,7 +374,7 @@
 
   /* ═══ PROJECT SHOWCASE ═══ */
   .project-hero {
-    max-width: 1100px; margin-bottom: 48px;
+    max-width: 1100px; margin: 0 auto 48px;
     background: var(--ink); color: var(--white);
     border-radius: 24px; padding: clamp(40px, 6vw, 72px);
     position: relative; overflow: hidden;
@@ -413,7 +414,7 @@
 
   .project-gallery {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px; max-width: 1100px;
+    gap: 20px; max-width: 1100px; margin: 0 auto;
   }
   .project-img-card {
     border-radius: 16px; overflow: hidden; cursor: pointer;
@@ -439,7 +440,7 @@
   /* ═══ PROPOSALS ═══ */
   .proposals-grid {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 20px; max-width: 1100px;
+    gap: 20px; max-width: 1100px; margin: 0 auto;
   }
   .proposal-card {
     background: var(--card); backdrop-filter: blur(12px);
@@ -466,7 +467,7 @@
   /* ═══ ARTICLES ═══ */
   .articles-grid {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 20px; max-width: 1100px;
+    gap: 20px; max-width: 1100px; margin: 0 auto;
   }
   .article-card {
     border-radius: 16px; overflow: hidden; cursor: pointer;
@@ -492,7 +493,7 @@
   /* ═══ SECTION DESC ═══ */
   .section-desc {
     font-size: 1rem; color: var(--ink-muted); line-height: 1.8;
-    max-width: 680px; margin-bottom: 40px;
+    max-width: 680px; margin: 0 auto 40px;
   }
 
   /* ═══ CONTACT ═══ */
@@ -509,14 +510,14 @@
   }
   .contact-title {
     font-family: var(--serif); font-weight: 700;
-    font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 16px; position: relative;
+    font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 16px; position: relative; text-align: center;
   }
   .contact-subtitle {
     font-weight: 300; color: rgba(250,248,245,0.5);
     font-size: 1.1rem; margin-bottom: 48px;
   }
   .contact-grid {
-    display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; position: relative;
+    display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; position: relative; max-width: 900px; margin: 0 auto;
   }
   .contact-card {
     background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
