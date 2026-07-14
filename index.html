@@ -896,15 +896,17 @@
   /* ═══ PROPOSALS CARD STACK ═══ */
   .proposals-stack {
     position: relative;
-    width: 320px;
-    height: 420px;
+    width: 600px;
+    height: 480px;
     margin: 0 auto 40px;
-    perspective: 1000px;
+    perspective: 1200px;
   }
   .proposal-card {
     position: absolute;
-    top: 0; left: 0;
-    width: 100%;
+    top: 50%; left: 50%;
+    width: 280px;
+    margin-left: -140px;
+    margin-top: -180px;
     background: var(--card);
     backdrop-filter: blur(12px);
     border: 1px solid var(--card-border);
@@ -912,7 +914,7 @@
     overflow: hidden;
     cursor: pointer;
     transition: all 0.6s cubic-bezier(0.22,1,0.36,1);
-    transform-origin: center bottom;
+    transform-origin: center 120%;
     box-shadow: 0 8px 24px rgba(26,26,24,0.08);
   }
   .proposal-card img {
@@ -922,10 +924,10 @@
     display: block;
   }
   .proposal-card .pp-label {
-    padding: 16px 20px;
+    padding: 14px 16px;
     font-family: var(--serif);
     font-weight: 600;
-    font-size: 0.88rem;
+    font-size: 0.85rem;
     color: var(--ink);
     line-height: 1.5;
     text-align: center;
@@ -933,36 +935,44 @@
     transform: translateY(8px);
     transition: opacity 0.4s, transform 0.4s;
   }
-  /* Stack positions - fan out */
-  .proposal-card:nth-child(1) { z-index: 1; transform: rotate(-6deg) translateY(12px); }
-  .proposal-card:nth-child(2) { z-index: 2; transform: rotate(-3deg) translateY(8px); }
-  .proposal-card:nth-child(3) { z-index: 3; transform: rotate(0deg) translateY(4px); }
-  .proposal-card:nth-child(4) { z-index: 4; transform: rotate(3deg) translateY(8px); }
-  .proposal-card:nth-child(5) { z-index: 5; transform: rotate(6deg) translateY(12px); }
-  .proposal-card:nth-child(6) { z-index: 6; transform: rotate(9deg) translateY(16px); }
+  /* Fan arc positions */
+  .proposal-card:nth-child(1) { z-index: 1; transform: rotate(-40deg) translateY(-20px); }
+  .proposal-card:nth-child(2) { z-index: 2; transform: rotate(-24deg) translateY(-10px); }
+  .proposal-card:nth-child(3) { z-index: 3; transform: rotate(-8deg) translateY(0px); }
+  .proposal-card:nth-child(4) { z-index: 4; transform: rotate(8deg) translateY(0px); }
+  .proposal-card:nth-child(5) { z-index: 5; transform: rotate(24deg) translateY(-10px); }
+  .proposal-card:nth-child(6) { z-index: 6; transform: rotate(40deg) translateY(-20px); }
 
-  /* Hover: pull card up and out */
+  /* Hover: pull card out and center */
   .proposal-card:hover {
-    transform: rotate(0deg) translateY(-30px) scale(1.08) !important;
+    transform: rotate(0deg) translateY(-60px) scale(1.15) !important;
     z-index: 20 !important;
-    box-shadow: 0 32px 64px rgba(26,26,24,0.15), 0 0 0 2px rgba(196,151,59,0.2);
+    box-shadow: 0 36px 80px rgba(26,26,24,0.18), 0 0 0 2px rgba(196,151,59,0.25);
   }
   .proposal-card:hover .pp-label {
     opacity: 1;
     transform: translateY(0);
   }
 
-  /* Other cards retreat when one is hovered */
+  /* Other cards dim and shrink when one is hovered */
   .proposals-stack:hover .proposal-card:not(:hover) {
-    opacity: 0.6;
-    filter: brightness(0.95);
+    opacity: 0.4;
+    filter: brightness(0.9) blur(1px);
+    transform: scale(0.92) !important;
   }
 
   @media (max-width: 768px) {
     .proposals-stack {
-      width: 280px;
-      height: 380px;
+      width: 340px;
+      height: 400px;
     }
+    .proposal-card { width: 240px; margin-left: -120px; }
+    .proposal-card:nth-child(1) { transform: rotate(-35deg); }
+    .proposal-card:nth-child(2) { transform: rotate(-21deg); }
+    .proposal-card:nth-child(3) { transform: rotate(-7deg); }
+    .proposal-card:nth-child(4) { transform: rotate(7deg); }
+    .proposal-card:nth-child(5) { transform: rotate(21deg); }
+    .proposal-card:nth-child(6) { transform: rotate(35deg); }
   }
 
   /* ═══ SKILL PROGRESS BAR + GLOW ═══ */
@@ -1007,27 +1017,27 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 10px;
     margin-top: 48px;
-    opacity: 0.4;
+    opacity: 0.55;
     transition: opacity 0.5s;
   }
   .section-hint:hover {
-    opacity: 0.7;
+    opacity: 0.85;
   }
   .section-hint .hint-icon {
-    font-size: 0.75rem;
+    font-size: 1rem;
     animation: hintPulse 2s ease-in-out infinite;
   }
   @keyframes hintPulse {
-    0%, 100% { opacity: 0.5; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.15); }
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
   }
   .section-hint .hint-text {
     font-family: var(--mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.08em;
-    color: var(--ink-ghost);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-muted);
   }
 
   /* ═══ REVEAL ═══ */
@@ -2135,8 +2145,10 @@
       if (e.key === 'ArrowRight') next();
     });
 
-    // Start
-    startProgress();
+    // Don't auto-start - wait for scroll trigger
+    // Set initial state
+    progressBar.style.transition = 'none';
+    progressBar.style.width = '0%';
   }
 
   initCarousel('projectCarousel', 4000);
