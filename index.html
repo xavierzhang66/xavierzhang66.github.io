@@ -718,6 +718,113 @@
     display: inline-block;
   }
 
+
+  /* ═══ APPLE-STYLE CAROUSEL ═══ */
+  .carousel-wrapper {
+    position: relative;
+    max-width: 1100px;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 20px;
+  }
+  .carousel-track {
+    display: flex;
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+  }
+  .carousel-slide {
+    min-width: 100%;
+    position: relative;
+    cursor: pointer;
+  }
+  .carousel-slide img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    display: block;
+  }
+  .carousel-slide .slide-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 40px 32px 28px;
+    background: linear-gradient(to top, rgba(10,10,8,0.7), transparent);
+    color: white;
+    text-align: center;
+  }
+  .carousel-slide .slide-caption .slide-title {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+  }
+  .carousel-slide .slide-caption .slide-sub {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.6);
+  }
+
+  /* Dots */
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .carousel-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--ink-ghost);
+    border: none;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    padding: 0;
+  }
+  .carousel-dot.active {
+    background: var(--accent);
+    width: 28px;
+    border-radius: 4px;
+  }
+
+  /* Progress bar on carousel */
+  .carousel-progress {
+    position: absolute;
+    bottom: 0; left: 0;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 0 2px 2px 0;
+    z-index: 10;
+    transition: width linear;
+  }
+
+  /* Arrow buttons */
+  .carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    font-size: 1.2rem;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.3s, background 0.3s;
+  }
+  .carousel-wrapper:hover .carousel-arrow { opacity: 1; }
+  .carousel-arrow:hover { background: rgba(255,255,255,0.25); }
+  .carousel-prev { left: 16px; }
+  .carousel-next { right: 16px; }
+
+  /* Label centering */
+  .pic-label, .art-label, .pp-label {
+    text-align: center;
+  }
+
   /* ═══ REVEAL ═══ */
   .reveal {
     opacity: 0; transform: translateY(40px);
@@ -1162,36 +1269,63 @@
     </div>
   </div>
 
-  <div class="project-gallery">
-    <div class="project-img-card reveal reveal-d1" data-group="project">
-      <img src="images/projects/07-项目实施实地调研.png" alt="项目实施 — 实地调研" loading="lazy">
-      <div class="pic-label">实地调研</div>
+  <div class="carousel-wrapper" id="projectCarousel">
+    <div class="carousel-track">
+      <div class="carousel-slide" data-group="project">
+        <img src="images/projects/07-项目实施实地调研.png" alt="项目实施 — 实地调研">
+        <div class="slide-caption">
+          <div class="slide-title">实地调研</div>
+          <div class="slide-sub">深入非遗传承基地进行田野调查</div>
+        </div>
+      </div>
+      <div class="carousel-slide" data-group="project">
+        <img src="images/projects/06-智能小程序方案设计.png" alt="智能小程序 — 方案设计">
+        <div class="slide-caption">
+          <div class="slide-title">方案设计</div>
+          <div class="slide-sub">"榄艺"微信小程序产品方案</div>
+        </div>
+      </div>
+      <div class="carousel-slide" data-group="project">
+        <img src="images/projects/05-智能小程序技术原理.png" alt="智能小程序 — 技术原理">
+        <div class="slide-caption">
+          <div class="slide-title">技术原理</div>
+          <div class="slide-sub">数智化平台技术架构</div>
+        </div>
+      </div>
+      <div class="carousel-slide" data-group="project">
+        <img src="images/projects/04-智能小程序数智化界面.png" alt="智能小程序 — 数智化界面">
+        <div class="slide-caption">
+          <div class="slide-title">数智化界面</div>
+          <div class="slide-sub">交互设计与用户体验</div>
+        </div>
+      </div>
+      <div class="carousel-slide" data-group="project">
+        <img src="images/projects/02-智能小程序商业模式.png" alt="智能小程序 — 商业模式">
+        <div class="slide-caption">
+          <div class="slide-title">商业模式</div>
+          <div class="slide-sub">可持续运营与变现策略</div>
+        </div>
+      </div>
+      <div class="carousel-slide" data-group="project">
+        <img src="images/projects/01-智能小程序发布与完善.png" alt="智能小程序 — 发布与完善">
+        <div class="slide-caption">
+          <div class="slide-title">发布与完善</div>
+          <div class="slide-sub">上线迭代与用户反馈</div>
+        </div>
+      </div>
+      <div class="carousel-slide" data-group="project">
+        <img src="images/projects/03-传播多平台微信公众号.png" alt="传播多平台 — 微信公众号">
+        <div class="slide-caption">
+          <div class="slide-title">微信公众号传播</div>
+          <div class="slide-sub">多平台内容分发矩阵</div>
+        </div>
+      </div>
     </div>
-    <div class="project-img-card reveal reveal-d2" data-group="project">
-      <img src="images/projects/06-智能小程序方案设计.png" alt="智能小程序 — 方案设计" loading="lazy">
-      <div class="pic-label">方案设计</div>
-    </div>
-    <div class="project-img-card reveal reveal-d1" data-group="project">
-      <img src="images/projects/05-智能小程序技术原理.png" alt="智能小程序 — 技术原理" loading="lazy">
-      <div class="pic-label">技术原理</div>
-    </div>
-    <div class="project-img-card reveal reveal-d2" data-group="project">
-      <img src="images/projects/04-智能小程序数智化界面.png" alt="智能小程序 — 数智化界面" loading="lazy">
-      <div class="pic-label">数智化界面</div>
-    </div>
-    <div class="project-img-card reveal reveal-d1" data-group="project">
-      <img src="images/projects/02-智能小程序商业模式.png" alt="智能小程序 — 商业模式" loading="lazy">
-      <div class="pic-label">商业模式</div>
-    </div>
-    <div class="project-img-card reveal reveal-d2" data-group="project">
-      <img src="images/projects/01-智能小程序发布与完善.png" alt="智能小程序 — 发布与完善" loading="lazy">
-      <div class="pic-label">发布与完善</div>
-    </div>
-    <div class="project-img-card reveal reveal-d1" data-group="project">
-      <img src="images/projects/03-传播多平台微信公众号.png" alt="传播多平台 — 微信公众号" loading="lazy">
-      <div class="pic-label">微信公众号传播</div>
-    </div>
+    <div class="carousel-progress" id="carouselProgress"></div>
+    <button class="carousel-arrow carousel-prev" id="carouselPrev">‹</button>
+    <button class="carousel-arrow carousel-next" id="carouselNext">›</button>
   </div>
+  <div class="carousel-dots" id="carouselDots"></div>
 </section>
 
 <!-- Divider -->
@@ -1561,6 +1695,109 @@
       gsap.to(link, { scale: 1, duration: 0.3, ease: 'power2.out' });
     });
   });
+
+
+  // ═══ Apple-Style Auto-Play Carousel ═══
+  function initCarousel(wrapperId, intervalMs) {
+    const wrapper = document.getElementById(wrapperId);
+    if (!wrapper) return;
+    const track = wrapper.querySelector('.carousel-track');
+    const slides = track.querySelectorAll('.carousel-slide');
+    const dotsContainer = document.getElementById('carouselDots');
+    const progressBar = document.getElementById('carouselProgress');
+    const prevBtn = document.getElementById('carouselPrev');
+    const nextBtn = document.getElementById('carouselNext');
+
+    let current = 0;
+    const total = slides.length;
+    let autoplayTimer = null;
+    let progressTimer = null;
+    const INTERVAL = intervalMs || 4000;
+
+    // Create dots
+    for (let i = 0; i < total; i++) {
+      const dot = document.createElement('button');
+      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      dot.addEventListener('click', () => goTo(i));
+      dotsContainer.appendChild(dot);
+    }
+
+    function goTo(index) {
+      current = index;
+      track.style.transform = `translateX(-${current * 100}%)`;
+
+      // Update dots
+      dotsContainer.querySelectorAll('.carousel-dot').forEach((d, i) => {
+        d.classList.toggle('active', i === current);
+      });
+
+      // Reset progress
+      startProgress();
+    }
+
+    function next() {
+      goTo((current + 1) % total);
+    }
+
+    function prev() {
+      goTo((current - 1 + total) % total);
+    }
+
+    function startProgress() {
+      if (progressTimer) clearInterval(progressTimer);
+      progressBar.style.transition = 'none';
+      progressBar.style.width = '0%';
+
+      // Force reflow
+      progressBar.offsetHeight;
+
+      progressBar.style.transition = `width ${INTERVAL}ms linear`;
+      progressBar.style.width = '100%';
+
+      if (autoplayTimer) clearTimeout(autoplayTimer);
+      autoplayTimer = setTimeout(next, INTERVAL);
+    }
+
+    function stopAutoplay() {
+      if (autoplayTimer) clearTimeout(autoplayTimer);
+      if (progressTimer) clearInterval(progressTimer);
+      progressBar.style.transition = 'none';
+      progressBar.style.width = '0%';
+    }
+
+    prevBtn.addEventListener('click', () => { prev(); });
+    nextBtn.addEventListener('click', () => { next(); });
+
+    // Pause on hover
+    wrapper.addEventListener('mouseenter', stopAutoplay);
+    wrapper.addEventListener('mouseleave', startProgress);
+
+    // Touch swipe support
+    let touchStartX = 0;
+    wrapper.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+      stopAutoplay();
+    }, { passive: true });
+    wrapper.addEventListener('touchend', (e) => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) {
+        diff > 0 ? next() : prev();
+      }
+      startProgress();
+    }, { passive: true });
+
+    // Keyboard
+    wrapper.setAttribute('tabindex', '0');
+    wrapper.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') prev();
+      if (e.key === 'ArrowRight') next();
+    });
+
+    // Start
+    startProgress();
+  }
+
+  initCarousel('projectCarousel', 4000);
 
 })();
 </script>
