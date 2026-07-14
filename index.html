@@ -825,6 +825,172 @@
     text-align: center;
   }
 
+
+
+  /* ═══ 3D FLIP CARD (Awards) ═══ */
+  .award-card {
+    perspective: 800px;
+    cursor: pointer;
+  }
+  .award-card .flip-inner {
+    position: relative;
+    width: 100%;
+    transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+    transform-style: preserve-3d;
+  }
+  .award-card:hover .flip-inner {
+    transform: rotateY(180deg);
+  }
+  .award-card .flip-front,
+  .award-card .flip-back {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .award-card .flip-front {
+    position: relative;
+    z-index: 2;
+  }
+  .award-card .flip-back {
+    position: absolute;
+    inset: 0;
+    transform: rotateY(180deg);
+    background: var(--ink);
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+  }
+  .award-card .flip-back .back-icon {
+    font-size: 2rem;
+    margin-bottom: 12px;
+  }
+  .award-card .flip-back .back-title {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+  .award-card .flip-back .back-desc {
+    font-size: 0.78rem;
+    color: rgba(250,248,245,0.6);
+    line-height: 1.6;
+  }
+
+  /* ═══ NUMBER COUNTER (Education) ═══ */
+  .counter-value {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 1.6rem;
+    line-height: 1.2;
+    display: inline-block;
+  }
+  .edu-card.main .counter-value {
+    color: var(--accent);
+  }
+
+  /* ═══ HORIZONTAL SCROLL (Proposals) ═══ */
+  .h-scroll-wrapper {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .h-scroll-container {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 20px 0 32px;
+    scrollbar-width: none;
+  }
+  .h-scroll-container::-webkit-scrollbar { display: none; }
+  .h-scroll-item {
+    min-width: 280px;
+    flex: 0 0 auto;
+    scroll-snap-align: center;
+    background: var(--card);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  .h-scroll-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(26,26,24,0.08);
+  }
+  .h-scroll-item img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    display: block;
+  }
+  .h-scroll-item .hs-label {
+    padding: 14px 18px;
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: var(--ink);
+    line-height: 1.5;
+    text-align: center;
+  }
+  .h-scroll-fade-left, .h-scroll-fade-right {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 60px;
+    pointer-events: none;
+    z-index: 5;
+  }
+  .h-scroll-fade-left {
+    left: 0;
+    background: linear-gradient(to right, var(--bg), transparent);
+  }
+  .h-scroll-fade-right {
+    right: 0;
+    background: linear-gradient(to left, var(--bg), transparent);
+  }
+
+  /* ═══ SKILL PROGRESS BAR + GLOW ═══ */
+  .skill-card {
+    position: relative;
+    overflow: hidden;
+  }
+  .skill-card::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 22px;
+    background: linear-gradient(135deg, var(--accent), transparent 40%, transparent 60%, var(--accent));
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.4s;
+  }
+  .skill-card:hover::after {
+    opacity: 0.3;
+  }
+  .skill-card .skill-bar {
+    margin-top: 16px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(26,26,24,0.06);
+    overflow: hidden;
+  }
+  .skill-card .skill-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent), #d4a84a);
+    width: 0%;
+    transition: width 1.5s cubic-bezier(0.22,1,0.36,1);
+  }
+  .skill-card.highlight .skill-bar {
+    background: rgba(255,255,255,0.08);
+  }
+
   /* ═══ REVEAL ═══ */
   .reveal {
     opacity: 0; transform: translateY(40px);
@@ -1015,30 +1181,35 @@
       <div class="skill-label">Certification</div>
       <div class="skill-title">高中语文教师资格证</div>
       <div class="skill-desc">具备高级中学语文学科教学能力，持有国家认证教师资格证书。</div>
+      <div class="skill-bar"><div class="skill-bar-fill" data-width="95"></div></div>
     </div>
     <div class="skill-card reveal reveal-d2">
       <div class="skill-icon">语</div>
       <div class="skill-label">Language</div>
       <div class="skill-title">语言能力</div>
       <div class="skill-desc">普通话二级甲等；大学英语四 / 六级（CET-4/6），具备良好的听说读写及文件浏览能力。</div>
+      <div class="skill-bar"><div class="skill-bar-fill" data-width="88"></div></div>
     </div>
     <div class="skill-card reveal reveal-d3">
       <div class="skill-icon">办</div>
       <div class="skill-label">Productivity</div>
       <div class="skill-title">办公软件</div>
       <div class="skill-desc">熟练运用 Word、Excel、PowerPoint 等 Office 全家桶，高效完成文档处理与数据整理。</div>
+      <div class="skill-bar"><div class="skill-bar-fill" data-width="90"></div></div>
     </div>
     <div class="skill-card reveal reveal-d4">
       <div class="skill-icon">影</div>
       <div class="skill-label">Multimedia</div>
       <div class="skill-title">多媒体制作</div>
       <div class="skill-desc">掌握 Final Cut Pro、剪映、Premiere Pro、Photoshop、Canva 等工具，能够独立完成视频剪辑与视觉设计。</div>
+      <div class="skill-bar"><div class="skill-bar-fill" data-width="85"></div></div>
     </div>
     <div class="skill-card reveal reveal-d5">
       <div class="skill-icon">AI</div>
       <div class="skill-label">AI Application</div>
       <div class="skill-title">AI 应用能力</div>
       <div class="skill-desc">熟练运用 ChatGPT、Claude、Gemini、Grok 等生成式 AI 工具，应用于文案策划、PPT 制作、资料整理、数据分析及 Prompt 设计；持续实践 Vibe Coding（AI 辅助开发）工作流，借助 AI 独立完成个人网站开发。</div>
+      <div class="skill-bar"><div class="skill-bar-fill" data-width="92"></div></div>
     </div>
   </div>
 </section>
@@ -1056,89 +1227,197 @@
     <div class="section-line"></div>
   </div>
   <p class="section-desc reveal">在校期间获得的各类荣誉与资质认证，涵盖奖学金、荣誉称号、聘书、体育竞技及专业资格证书。</p>
-  <div class="awards-grid">
-    <div class="award-card reveal reveal-d1" data-group="awards">
-      <img src="images/awards/03-2023-2024优秀学生二等奖学金.png" alt="2023-2024 优秀学生二等奖学金" loading="lazy">
-      <div class="award-info">
-        <div class="award-category">奖学金</div>
-        <div class="award-name">2023-2024 学年优秀学生二等奖学金</div>
+    <div class="awards-grid">
+    <div class="award-card" data-group="awards">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <img src="images/awards/03-2023-2024优秀学生二等奖学金.png" alt="2023-2024 优秀学生二等奖学金" loading="lazy">
+          <div class="award-info">
+            <div class="award-category">奖学金</div>
+            <div class="award-name">2023-2024 优秀学生二等奖学金</div>
+          </div>
+        </div>
+        <div class="flip-back">
+          <div class="back-icon">🏅</div>
+          <div class="back-title">2023-2024 优秀学生二等奖学金</div>
+          <div class="back-desc">学业成绩优异，综合素质突出，荣获校级二等奖学金</div>
+        </div>
       </div>
     </div>
-    <div class="award-card reveal reveal-d2" data-group="awards">
-      <img src="images/awards/02-2024-2025优秀学生骨干奖学金.png" alt="2024-2025 优秀学生骨干奖学金" loading="lazy">
-      <div class="award-info">
-        <div class="award-category">奖学金</div>
-        <div class="award-name">2024-2025 学年优秀学生骨干奖学金</div>
+    <div class="award-card" data-group="awards">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <img src="images/awards/02-2024-2025优秀学生骨干奖学金.png" alt="2024-2025 优秀学生骨干奖学金" loading="lazy">
+          <div class="award-info">
+            <div class="award-category">奖学金</div>
+            <div class="award-name">2024-2025 优秀学生骨干奖学金</div>
+          </div>
+        </div>
+        <div class="flip-back">
+          <div class="back-icon">🏅</div>
+          <div class="back-title">2024-2025 优秀学生骨干奖学金</div>
+          <div class="back-desc">学生工作中表现优异，获骨干奖学金表彰</div>
+        </div>
       </div>
     </div>
-    <div class="award-card reveal reveal-d1" data-group="awards">
-      <img src="images/awards/10-2023-2024优秀学生代表.png" alt="2023-2024 优秀学生代表" loading="lazy">
-      <div class="award-info">
-        <div class="award-category">荣誉称号</div>
-        <div class="award-name">2023-2024 学年优秀学生代表</div>
+    <div class="award-card" data-group="awards">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <img src="images/awards/10-2023-2024优秀学生代表.png" alt="2023-2024 优秀学生代表" loading="lazy">
+          <div class="award-info">
+            <div class="award-category">荣誉称号</div>
+            <div class="award-name">2023-2024 优秀学生代表</div>
+          </div>
+        </div>
+        <div class="flip-back">
+          <div class="back-icon">⭐</div>
+          <div class="back-title">2023-2024 优秀学生代表</div>
+          <div class="back-desc">积极参与校园治理，连续获评优秀学生代表</div>
+        </div>
       </div>
     </div>
-    <div class="award-card reveal reveal-d2" data-group="awards">
-      <img src="images/awards/06-2024-2025优秀学生代表.png" alt="2024-2025 优秀学生代表" loading="lazy">
-      <div class="award-info">
-        <div class="award-category">荣誉称号</div>
-        <div class="award-name">2024-2025 学年优秀学生代表</div>
+    <div class="award-card" data-group="awards">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <img src="images/awards/06-2024-2025优秀学生代表.png" alt="2024-2025 优秀学生代表" loading="lazy">
+          <div class="award-info">
+            <div class="award-category">荣誉称号</div>
+            <div class="award-name">2024-2025 优秀学生代表</div>
+          </div>
+        </div>
+        <div class="flip-back">
+          <div class="back-icon">⭐</div>
+          <div class="back-title">2024-2025 优秀学生代表</div>
+          <div class="back-desc">连续两年获此殊荣，服务同学表现突出</div>
+        </div>
       </div>
     </div>
-    <div class="award-card reveal reveal-d1" data-group="awards">
-      <img src="images/awards/01-军训先进个人.png" alt="军训先进个人" loading="lazy">
-      <div class="award-info">
-        <div class="award-category">荣誉称号</div>
-        <div class="award-name">军训先进个人</div>
+    <div class="award-card" data-group="awards">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <img src="images/awards/01-军训先进个人.png" alt="军训先进个人" loading="lazy">
+          <div class="award-info">
+            <div class="award-category">荣誉称号</div>
+            <div class="award-name">军训先进个人</div>
+          </div>
+        </div>
+        <div class="flip-back">
+          <div class="back-icon">💪</div>
+          <div class="back-title">军训先进个人</div>
+          <div class="back-desc">2023年军训期间表现优异，获评先进个人</div>
+        </div>
       </div>
     </div>
-    <div class="award-card reveal reveal-d2" data-group="awards">
-      <img src="images/awards/04-学生代表团副团长聘书.png" alt="学生代表团副团长聘书" loading="lazy">
-      <div class="award-info">
-        <div class="award-category">聘书</div>
-        <div class="award-name">华文学院学生代表团副团长</div>
+    <div class="award-card" data-group="awards">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <img src="images/awards/04-学生代表团副团长聘书.png" alt="学生代表团副团长" loading="lazy">
+          <div class="award-info">
+            <div class="award-category">聘书</div>
+            <div class="award-name">学生代表团副团长</div>
+          </div>
+        </div>
+        <div class="flip-back">
+          <div class="back-icon">📋</div>
+          <div class="back-title">学生代表团副团长</div>
+          <div class="back-desc">领导80人团队，撰写25+份提案，推动80%落实</div>
+        </div>
       </div>
     </div>
-    <div class="award-card reveal reveal-d1" data-group="awards">
-      <img src="images/awards/05-2024招生宣传协会干事聘书.png" alt="2024 招生宣传协会干事聘书" loading="lazy">
-      <div class="award-info">
-        <div class="award-category">聘书</div>
-        <div class="award-name">2024 招生宣传协会人力资源部干事</div>
+    <div class="award-card" data-group="awards">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <img src="images/awards/05-2024招生宣传协会干事聘书.png" alt="2024 招生宣传协会干事" loading="lazy">
+          <div class="award-info">
+            <div class="award-category">聘书</div>
+            <div class="award-name">2024 招生宣传协会干事</div>
+          </div>
+        </div>
+        <div class="flip-back">
+          <div class="back-icon">📋</div>
+          <div class="back-title">2024 招生宣传协会干事</div>
+          <div class="back-desc">负责招生宣传人力资源部工作</div>
+        </div>
       </div>
     </div>
-    <div class="award-card reveal reveal-d2" data-group="awards">
-      <img src="images/awards/09-2025招生宣传协会聘书.png" alt="2025 招生宣传协会聘书" loading="lazy">
-      <div class="award-info">
-        <div class="award-category">聘书</div>
-        <div class="award-name">2025 招生宣传协会人力资源部</div>
+    <div class="award-card" data-group="awards">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <img src="images/awards/09-2025招生宣传协会聘书.png" alt="2025 招生宣传协会" loading="lazy">
+          <div class="award-info">
+            <div class="award-category">聘书</div>
+            <div class="award-name">2025 招生宣传协会</div>
+          </div>
+        </div>
+        <div class="flip-back">
+          <div class="back-icon">📋</div>
+          <div class="back-title">2025 招生宣传协会</div>
+          <div class="back-desc">连续两年参与招生宣传工作</div>
+        </div>
       </div>
     </div>
-    <div class="award-card reveal reveal-d1" data-group="awards">
-      <img src="images/awards/08-田径运动会4x400第三名.png" alt="田径运动会 4×400 第三名" loading="lazy">
-      <div class="award-info">
-        <div class="award-category">体育竞技</div>
-        <div class="award-name">华文学院田径运动会 4×400 第三名</div>
+    <div class="award-card" data-group="awards">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <img src="images/awards/08-田径运动会4x400第三名.png" alt="田径运动会 4×400 第三名" loading="lazy">
+          <div class="award-info">
+            <div class="award-category">体育竞技</div>
+            <div class="award-name">田径运动会 4×400 第三名</div>
+          </div>
+        </div>
+        <div class="flip-back">
+          <div class="back-icon">🏃</div>
+          <div class="back-title">田径运动会 4×400 第三名</div>
+          <div class="back-desc">华文学院田径运动会男子4×400米接力季军</div>
+        </div>
       </div>
     </div>
-    <div class="award-card reveal reveal-d2" data-group="awards">
-      <img src="images/awards/07-田径运动会4x400第五名.png" alt="田径运动会 4×400 第五名" loading="lazy">
-      <div class="award-info">
-        <div class="award-category">体育竞技</div>
-        <div class="award-name">华文学院田径运动会 4×400 第五名</div>
+    <div class="award-card" data-group="awards">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <img src="images/awards/07-田径运动会4x400第五名.png" alt="田径运动会 4×400 第五名" loading="lazy">
+          <div class="award-info">
+            <div class="award-category">体育竞技</div>
+            <div class="award-name">田径运动会 4×400 第五名</div>
+          </div>
+        </div>
+        <div class="flip-back">
+          <div class="back-icon">🏃</div>
+          <div class="back-title">田径运动会 4×400 第五名</div>
+          <div class="back-desc">华文学院田径运动会男子4×400米接力第五名</div>
+        </div>
       </div>
     </div>
-    <div class="award-card reveal reveal-d1" data-group="awards">
-      <img src="images/awards/12-教师资格考试合格证明.jpg" alt="中小学教师资格考试合格证明" loading="lazy">
-      <div class="award-info">
-        <div class="award-category">资格证书</div>
-        <div class="award-name">中小学教师资格考试合格证明</div>
+    <div class="award-card" data-group="awards">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <img src="images/awards/12-教师资格考试合格证明.jpg" alt="教师资格考试合格证明" loading="lazy">
+          <div class="award-info">
+            <div class="award-category">资格证书</div>
+            <div class="award-name">教师资格考试合格证明</div>
+          </div>
+        </div>
+        <div class="flip-back">
+          <div class="back-icon">📜</div>
+          <div class="back-title">教师资格考试合格证明</div>
+          <div class="back-desc">通过国家中小学教师资格考试，具备高中语文教学资格</div>
+        </div>
       </div>
     </div>
-    <div class="award-card reveal reveal-d2" data-group="awards">
-      <img src="images/awards/11-普通话二级甲等.jpg" alt="普通话水平测试二级甲等" loading="lazy">
-      <div class="award-info">
-        <div class="award-category">资格证书</div>
-        <div class="award-name">国家普通话水平测试二级甲等</div>
+    <div class="award-card" data-group="awards">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <img src="images/awards/11-普通话二级甲等.jpg" alt="普通话二级甲等" loading="lazy">
+          <div class="award-info">
+            <div class="award-category">资格证书</div>
+            <div class="award-name">普通话二级甲等</div>
+          </div>
+        </div>
+        <div class="flip-back">
+          <div class="back-icon">🎤</div>
+          <div class="back-title">普通话二级甲等</div>
+          <div class="back-desc">国家普通话水平测试二级甲等，发音标准规范</div>
+        </div>
       </div>
     </div>
   </div>
@@ -1341,30 +1620,34 @@
     <div class="section-line"></div>
   </div>
   <p class="section-desc reveal">作为学生代表团副团长，累计撰写 25+ 份正式提案，推动近 80% 提案得到落实。以下为部分代表性提案。</p>
-  <div class="proposals-grid">
-    <div class="proposal-card reveal reveal-d1" data-group="proposals">
-      <img src="images/proposals/01-提案开放日策划案.jpg" alt="提案开放日策划案" loading="lazy">
-      <div class="pp-label">提案开放日策划案</div>
-    </div>
-    <div class="proposal-card reveal reveal-d2" data-group="proposals">
-      <img src="images/proposals/02-笃行楼电梯优化建议.png" alt="关于笃行楼电梯优化的建议" loading="lazy">
-      <div class="pp-label">关于笃行楼电梯优化的建议</div>
-    </div>
-    <div class="proposal-card reveal reveal-d1" data-group="proposals">
-      <img src="images/proposals/03-电动车摩托车管理建议.png" alt="关于加强电动车摩托车管理的建议" loading="lazy">
-      <div class="pp-label">关于加强电动车摩托车管理的建议</div>
-    </div>
-    <div class="proposal-card reveal reveal-d2" data-group="proposals">
-      <img src="images/proposals/04-孔子像周边环境建议.png" alt="关于孔子像周边生态环境的建议" loading="lazy">
-      <div class="pp-label">关于孔子像周边生态环境和基础设施的建议</div>
-    </div>
-    <div class="proposal-card reveal reveal-d1" data-group="proposals">
-      <img src="images/proposals/05-校车预约小程序提案.png" alt="校车线上预约小程序使用意向提案" loading="lazy">
-      <div class="pp-label">校车线上预约小程序使用意向提案</div>
-    </div>
-    <div class="proposal-card reveal reveal-d2" data-group="proposals">
-      <img src="images/proposals/06-设置外卖架建议.png" alt="关于设置外卖架的建议" loading="lazy">
-      <div class="pp-label">关于设置外卖架的建议</div>
+  <div class="h-scroll-wrapper">
+    <div class="h-scroll-fade-left"></div>
+    <div class="h-scroll-fade-right"></div>
+    <div class="h-scroll-container">
+      <div class="h-scroll-item" data-group="proposals">
+        <img src="images/proposals/01-提案开放日策划案.jpg" alt="提案开放日策划案" loading="lazy">
+        <div class="hs-label">提案开放日策划案</div>
+      </div>
+      <div class="h-scroll-item" data-group="proposals">
+        <img src="images/proposals/02-笃行楼电梯优化建议.png" alt="关于笃行楼电梯优化的建议" loading="lazy">
+        <div class="hs-label">关于笃行楼电梯优化的建议</div>
+      </div>
+      <div class="h-scroll-item" data-group="proposals">
+        <img src="images/proposals/03-电动车摩托车管理建议.png" alt="关于加强电动车摩托车管理的建议" loading="lazy">
+        <div class="hs-label">关于加强电动车摩托车管理的建议</div>
+      </div>
+      <div class="h-scroll-item" data-group="proposals">
+        <img src="images/proposals/04-孔子像周边环境建议.png" alt="关于孔子像周边生态环境的建议" loading="lazy">
+        <div class="hs-label">关于孔子像周边生态环境的建议</div>
+      </div>
+      <div class="h-scroll-item" data-group="proposals">
+        <img src="images/proposals/05-校车预约小程序提案.png" alt="校车线上预约小程序提案" loading="lazy">
+        <div class="hs-label">校车线上预约小程序提案</div>
+      </div>
+      <div class="h-scroll-item" data-group="proposals">
+        <img src="images/proposals/06-设置外卖架建议.png" alt="关于设置外卖架的建议" loading="lazy">
+        <div class="hs-label">关于设置外卖架的建议</div>
+      </div>
     </div>
   </div>
 </section>
@@ -1496,7 +1779,7 @@
   let currentIndex = 0;
 
   function getAllCards() {
-    return Array.from(document.querySelectorAll('[data-group]'));
+    return Array.from(document.querySelectorAll('[data-group]')).filter(c => c.querySelector('img'));
   }
 
   function openLightbox(card) {
@@ -1510,10 +1793,10 @@
 
   function showImage() {
     const card = currentGroup[currentIndex];
-    const img = card.querySelector('img');
+    const img = card.querySelector('.flip-front img') || card.querySelector('img');
     lbImg.src = img.src;
     lbImg.alt = img.alt;
-    const label = card.querySelector('.award-name, .pp-label, .art-label, .pic-label');
+    const label = card.querySelector('.award-name, .pp-label, .art-label, .pic-label, .hs-label');
     lbCaption.textContent = label ? label.textContent : img.alt;
   }
 
@@ -1798,6 +2081,101 @@
   }
 
   initCarousel('projectCarousel', 4000);
+
+
+  // ═══ Number Counter Animation ═══
+  function animateCounter(el, target, suffix) {
+    const isFloat = String(target).includes('.');
+    const obj = { val: 0 };
+    gsap.to(obj, {
+      val: target,
+      duration: 2,
+      ease: 'power2.out',
+      onUpdate: () => {
+        el.textContent = isFloat ? obj.val.toFixed(1) : Math.round(obj.val);
+        if (suffix) el.textContent += suffix;
+      }
+    });
+  }
+
+  // Education stat counters
+  const eduStats = document.querySelectorAll('.edu-stat');
+  eduStats.forEach(stat => {
+    const valEl = stat.querySelector('.val');
+    if (!valEl) return;
+    const text = valEl.textContent.trim();
+
+    ScrollTrigger.create({
+      trigger: stat,
+      start: 'top 85%',
+      once: true,
+      onEnter: () => {
+        if (text === '4.0') {
+          animateCounter(valEl, 4.0, '');
+        } else if (text.includes('Top')) {
+          const num = parseInt(text.replace('Top ', '').replace('%', ''));
+          animateCounter(valEl, num, '%');
+          valEl.textContent = '0%';
+          const obj = { val: 0 };
+          gsap.to(obj, {
+            val: num, duration: 2, ease: 'power2.out',
+            onUpdate: () => { valEl.textContent = 'Top ' + Math.round(obj.val) + '%'; }
+          });
+        } else {
+          // Don't animate "2023-2027"
+        }
+      }
+    });
+  });
+
+  // ═══ Skill Bar Fill Animation ═══
+  document.querySelectorAll('.skill-bar-fill').forEach(bar => {
+    const width = bar.dataset.width;
+    ScrollTrigger.create({
+      trigger: bar,
+      start: 'top 90%',
+      once: true,
+      onEnter: () => {
+        gsap.to(bar, { width: width + '%', duration: 1.5, ease: 'power2.out', delay: 0.3 });
+      }
+    });
+  });
+
+  // ═══ Horizontal Scroll Drag ═══
+  const hScrollContainer = document.querySelector('.h-scroll-container');
+  if (hScrollContainer) {
+    let isDown = false, startX, scrollLeft;
+    hScrollContainer.addEventListener('mousedown', (e) => {
+      isDown = true;
+      startX = e.pageX - hScrollContainer.offsetLeft;
+      scrollLeft = hScrollContainer.scrollLeft;
+      hScrollContainer.style.cursor = 'grabbing';
+    });
+    hScrollContainer.addEventListener('mouseleave', () => { isDown = false; hScrollContainer.style.cursor = 'grab'; });
+    hScrollContainer.addEventListener('mouseup', () => { isDown = false; hScrollContainer.style.cursor = 'grab'; });
+    hScrollContainer.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - hScrollContainer.offsetLeft;
+      hScrollContainer.scrollLeft = scrollLeft - (x - startX) * 1.5;
+    });
+    hScrollContainer.style.cursor = 'grab';
+
+    // GSAP scroll-linked fade for edges
+    const fadeLeft = document.querySelector('.h-scroll-fade-left');
+    const fadeRight = document.querySelector('.h-scroll-fade-right');
+    hScrollContainer.addEventListener('scroll', () => {
+      const sl = hScrollContainer.scrollLeft;
+      const max = hScrollContainer.scrollWidth - hScrollContainer.clientWidth;
+      fadeLeft.style.opacity = sl > 10 ? 1 : 0;
+      fadeRight.style.opacity = sl < max - 10 ? 1 : 0;
+    });
+  }
+
+  // ═══ Award Flip Cards - prevent lightbox on flip ═══
+  document.querySelectorAll('.award-card').forEach(card => {
+    card.removeEventListener('click', null);
+  });
 
 })();
 </script>
