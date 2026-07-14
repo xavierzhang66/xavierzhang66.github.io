@@ -893,66 +893,84 @@
     color: var(--accent);
   }
 
-  /* ═══ HORIZONTAL SCROLL (Proposals) ═══ */
-  .h-scroll-wrapper {
-    position: relative;
-    max-width: 1200px;
+  /* ═══ PROPOSALS EXPANDING CARDS ═══ */
+  .proposals-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 1100px;
     margin: 0 auto;
   }
-  .h-scroll-container {
-    display: flex;
-    gap: 20px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    padding: 20px 0 32px;
-    scrollbar-width: none;
-  }
-  .h-scroll-container::-webkit-scrollbar { display: none; }
-  .h-scroll-item {
-    min-width: 280px;
-    flex: 0 0 auto;
-    scroll-snap-align: center;
+  .proposal-card {
     background: var(--card);
     backdrop-filter: blur(12px);
     border: 1px solid var(--card-border);
-    border-radius: 16px;
+    border-radius: 20px;
     overflow: hidden;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.5s cubic-bezier(0.22,1,0.36,1),
+                box-shadow 0.5s cubic-bezier(0.22,1,0.36,1);
   }
-  .h-scroll-item:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 16px 40px rgba(26,26,24,0.08);
+  .proposal-card:nth-child(2),
+  .proposal-card:nth-child(5) {
+    transform: translateY(24px);
   }
-  .h-scroll-item img {
+  .proposal-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 24px 60px rgba(196,151,59,0.12);
+    border-color: rgba(196,151,59,0.2);
+  }
+  .proposal-card:nth-child(2):hover,
+  .proposal-card:nth-child(5):hover {
+    transform: translateY(16px) scale(1.02);
+  }
+  .proposal-card img {
     width: 100%;
     aspect-ratio: 4/3;
     object-fit: cover;
     display: block;
+    transition: transform 0.6s cubic-bezier(0.22,1,0.36,1);
   }
-  .h-scroll-item .hs-label {
-    padding: 14px 18px;
+  .proposal-card:hover img {
+    transform: scale(1.05);
+  }
+  .proposal-card .pp-label {
+    padding: 16px 20px;
     font-family: var(--serif);
     font-weight: 600;
-    font-size: 0.88rem;
+    font-size: 0.9rem;
     color: var(--ink);
     line-height: 1.5;
     text-align: center;
+    transition: color 0.3s;
   }
-  .h-scroll-fade-left, .h-scroll-fade-right {
+  .proposal-card:hover .pp-label {
+    color: var(--accent);
+  }
+  /* Overlay shimmer on hover */
+  .proposal-card::before {
+    content: '';
     position: absolute;
-    top: 0; bottom: 0;
-    width: 60px;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      transparent 30%,
+      rgba(196,151,59,0.06) 50%,
+      transparent 70%
+    );
+    opacity: 0;
+    z-index: 1;
     pointer-events: none;
-    z-index: 5;
+    transition: opacity 0.4s;
   }
-  .h-scroll-fade-left {
-    left: 0;
-    background: linear-gradient(to right, var(--bg), transparent);
+  .proposal-card:hover::before {
+    opacity: 1;
   }
-  .h-scroll-fade-right {
-    right: 0;
-    background: linear-gradient(to left, var(--bg), transparent);
+  @media (max-width: 768px) {
+    .proposals-grid { grid-template-columns: 1fr; }
+    .proposal-card:nth-child(2),
+    .proposal-card:nth-child(5) { transform: none; }
   }
 
   /* ═══ SKILL PROGRESS BAR + GLOW ═══ */
@@ -1620,34 +1638,30 @@
     <div class="section-line"></div>
   </div>
   <p class="section-desc reveal">作为学生代表团副团长，累计撰写 25+ 份正式提案，推动近 80% 提案得到落实。以下为部分代表性提案。</p>
-  <div class="h-scroll-wrapper">
-    <div class="h-scroll-fade-left"></div>
-    <div class="h-scroll-fade-right"></div>
-    <div class="h-scroll-container">
-      <div class="h-scroll-item" data-group="proposals">
-        <img src="images/proposals/01-提案开放日策划案.jpg" alt="提案开放日策划案" loading="lazy">
-        <div class="hs-label">提案开放日策划案</div>
-      </div>
-      <div class="h-scroll-item" data-group="proposals">
-        <img src="images/proposals/02-笃行楼电梯优化建议.png" alt="关于笃行楼电梯优化的建议" loading="lazy">
-        <div class="hs-label">关于笃行楼电梯优化的建议</div>
-      </div>
-      <div class="h-scroll-item" data-group="proposals">
-        <img src="images/proposals/03-电动车摩托车管理建议.png" alt="关于加强电动车摩托车管理的建议" loading="lazy">
-        <div class="hs-label">关于加强电动车摩托车管理的建议</div>
-      </div>
-      <div class="h-scroll-item" data-group="proposals">
-        <img src="images/proposals/04-孔子像周边环境建议.png" alt="关于孔子像周边生态环境的建议" loading="lazy">
-        <div class="hs-label">关于孔子像周边生态环境的建议</div>
-      </div>
-      <div class="h-scroll-item" data-group="proposals">
-        <img src="images/proposals/05-校车预约小程序提案.png" alt="校车线上预约小程序提案" loading="lazy">
-        <div class="hs-label">校车线上预约小程序提案</div>
-      </div>
-      <div class="h-scroll-item" data-group="proposals">
-        <img src="images/proposals/06-设置外卖架建议.png" alt="关于设置外卖架的建议" loading="lazy">
-        <div class="hs-label">关于设置外卖架的建议</div>
-      </div>
+  <div class="proposals-grid">
+    <div class="proposal-card" data-group="proposals">
+      <img src="images/proposals/01-提案开放日策划案.jpg" alt="提案开放日策划案" loading="lazy">
+      <div class="pp-label">提案开放日策划案</div>
+    </div>
+    <div class="proposal-card" data-group="proposals">
+      <img src="images/proposals/02-笃行楼电梯优化建议.png" alt="关于笃行楼电梯优化的建议" loading="lazy">
+      <div class="pp-label">关于笃行楼电梯优化的建议</div>
+    </div>
+    <div class="proposal-card" data-group="proposals">
+      <img src="images/proposals/03-电动车摩托车管理建议.png" alt="关于加强电动车摩托车管理的建议" loading="lazy">
+      <div class="pp-label">关于加强电动车摩托车管理的建议</div>
+    </div>
+    <div class="proposal-card" data-group="proposals">
+      <img src="images/proposals/04-孔子像周边环境建议.png" alt="关于孔子像周边生态环境的建议" loading="lazy">
+      <div class="pp-label">关于孔子像周边生态环境的建议</div>
+    </div>
+    <div class="proposal-card" data-group="proposals">
+      <img src="images/proposals/05-校车预约小程序提案.png" alt="校车线上预约小程序提案" loading="lazy">
+      <div class="pp-label">校车线上预约小程序提案</div>
+    </div>
+    <div class="proposal-card" data-group="proposals">
+      <img src="images/proposals/06-设置外卖架建议.png" alt="关于设置外卖架的建议" loading="lazy">
+      <div class="pp-label">关于设置外卖架的建议</div>
     </div>
   </div>
 </section>
@@ -2141,36 +2155,16 @@
     });
   });
 
-  // ═══ Horizontal Scroll Drag ═══
-  const hScrollContainer = document.querySelector('.h-scroll-container');
-  if (hScrollContainer) {
-    let isDown = false, startX, scrollLeft;
-    hScrollContainer.addEventListener('mousedown', (e) => {
-      isDown = true;
-      startX = e.pageX - hScrollContainer.offsetLeft;
-      scrollLeft = hScrollContainer.scrollLeft;
-      hScrollContainer.style.cursor = 'grabbing';
+  // ═══ Proposal Cards Hover Glow ═══
+  document.querySelectorAll('.proposal-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width * 100);
+      const y = ((e.clientY - rect.top) / rect.height * 100);
+      card.style.setProperty('--mx', x + '%');
+      card.style.setProperty('--my', y + '%');
     });
-    hScrollContainer.addEventListener('mouseleave', () => { isDown = false; hScrollContainer.style.cursor = 'grab'; });
-    hScrollContainer.addEventListener('mouseup', () => { isDown = false; hScrollContainer.style.cursor = 'grab'; });
-    hScrollContainer.addEventListener('mousemove', (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - hScrollContainer.offsetLeft;
-      hScrollContainer.scrollLeft = scrollLeft - (x - startX) * 1.5;
-    });
-    hScrollContainer.style.cursor = 'grab';
-
-    // GSAP scroll-linked fade for edges
-    const fadeLeft = document.querySelector('.h-scroll-fade-left');
-    const fadeRight = document.querySelector('.h-scroll-fade-right');
-    hScrollContainer.addEventListener('scroll', () => {
-      const sl = hScrollContainer.scrollLeft;
-      const max = hScrollContainer.scrollWidth - hScrollContainer.clientWidth;
-      fadeLeft.style.opacity = sl > 10 ? 1 : 0;
-      fadeRight.style.opacity = sl < max - 10 ? 1 : 0;
-    });
-  }
+  });
 
   // ═══ Award Flip Cards - prevent lightbox on flip ═══
   document.querySelectorAll('.award-card').forEach(card => {
