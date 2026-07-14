@@ -592,6 +592,80 @@
   .lightbox-prev { left: 24px; }
   .lightbox-next { right: 24px; }
 
+
+  /* ═══ ANIMATED BACKGROUND ═══ */
+  #bgCanvas {
+    position: fixed; inset: 0; z-index: -1;
+    pointer-events: none;
+  }
+  .floating-shapes {
+    position: fixed; inset: 0; z-index: -1;
+    pointer-events: none; overflow: hidden;
+  }
+  .float-shape {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+  .float-shape.s1 {
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(196,151,59,0.06), transparent 70%);
+    top: 10%; left: -5%;
+  }
+  .float-shape.s2 {
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(196,151,59,0.04), transparent 70%);
+    top: 60%; right: -3%;
+  }
+  .float-shape.s3 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(26,26,24,0.02), transparent 65%);
+    top: 35%; left: 40%;
+  }
+  .float-shape.s4 {
+    width: 150px; height: 150px;
+    background: radial-gradient(circle, rgba(196,151,59,0.05), transparent 70%);
+    bottom: 15%; left: 15%;
+  }
+  .float-shape.s5 {
+    width: 250px; height: 250px;
+    background: radial-gradient(circle, rgba(196,151,59,0.03), transparent 65%);
+    bottom: 30%; right: 20%;
+  }
+
+  /* Particle dots */
+  .particles-container {
+    position: fixed; inset: 0; z-index: -1;
+    pointer-events: none;
+  }
+  .particle {
+    position: absolute;
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+
+  /* Section entrance lines */
+  .section-line {
+    transform-origin: left;
+    transform: scaleX(0);
+  }
+  .section-line.animate {
+    animation: lineGrow 1s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+  @keyframes lineGrow {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+
+  /* Magnetic hover on cards */
+  .award-card, .project-img-card, .proposal-card, .article-card, .skill-card, .edu-card {
+    will-change: transform;
+  }
+
   /* ═══ REVEAL ═══ */
   .reveal {
     opacity: 0; transform: translateY(40px);
@@ -631,8 +705,20 @@
     .articles-grid .article-card { width: calc(50% - 10px); }
   }
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
 <body>
+
+<!-- Animated Background -->
+<div class="floating-shapes">
+  <div class="float-shape s1"></div>
+  <div class="float-shape s2"></div>
+  <div class="float-shape s3"></div>
+  <div class="float-shape s4"></div>
+  <div class="float-shape s5"></div>
+</div>
+<div class="particles-container" id="particles"></div>
 
 <div class="progress-bar" id="progressBar"></div>
 
@@ -1176,13 +1262,6 @@
     });
   }
 
-  // ═══ HERO PARALLAX ═══
-  const heroBg = document.getElementById('heroBgChar');
-  function heroParallax() {
-    const s = window.scrollY;
-    heroBg.style.transform = `translateY(${s * 0.15}px) scale(${1 + s * 0.0003})`;
-  }
-
   // ═══ NAV ═══
   let lastScroll = 0;
   const nav = document.getElementById('mainNav');
@@ -1209,14 +1288,14 @@
   window.addEventListener('scroll', () => {
     if (!ticking) {
       requestAnimationFrame(() => {
-        onScroll(); heroParallax(); navToggle(); updateProgress();
+        navToggle(); updateProgress();
         ticking = false;
       });
       ticking = true;
     }
   }, { passive: true });
 
-  onScroll(); updateProgress();
+  updateProgress();
 
   // ═══ LIGHTBOX ═══
   const overlay = document.getElementById('lightbox');
