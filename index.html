@@ -341,9 +341,10 @@
 
   /* ═══ AWARDS GALLERY ═══ */
   .awards-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    display: flex; flex-wrap: wrap; justify-content: center;
     gap: 20px; max-width: 1200px; margin: 0 auto;
   }
+  .awards-grid .award-card { width: 220px; flex: 0 0 auto; }
   .award-card {
     background: var(--card); backdrop-filter: blur(12px);
     border: 1px solid var(--card-border); border-radius: 16px;
@@ -413,9 +414,10 @@
   }
 
   .project-gallery {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    display: flex; flex-wrap: wrap; justify-content: center;
     gap: 20px; max-width: 1100px; margin: 0 auto;
   }
+  .project-gallery .project-img-card { width: 280px; flex: 0 0 auto; }
   .project-img-card {
     border-radius: 16px; overflow: hidden; cursor: pointer;
     background: var(--card); border: 1px solid var(--card-border);
@@ -439,9 +441,10 @@
 
   /* ═══ PROPOSALS ═══ */
   .proposals-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    display: flex; flex-wrap: wrap; justify-content: center;
     gap: 20px; max-width: 1100px; margin: 0 auto;
   }
+  .proposals-grid .proposal-card { width: 260px; flex: 0 0 auto; }
   .proposal-card {
     background: var(--card); backdrop-filter: blur(12px);
     border: 1px solid var(--card-border); border-radius: 16px;
@@ -466,9 +469,10 @@
 
   /* ═══ ARTICLES ═══ */
   .articles-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    display: flex; flex-wrap: wrap; justify-content: center;
     gap: 20px; max-width: 1100px; margin: 0 auto;
   }
+  .articles-grid .article-card { width: 240px; flex: 0 0 auto; }
   .article-card {
     border-radius: 16px; overflow: hidden; cursor: pointer;
     background: var(--card); border: 1px solid var(--card-border);
@@ -621,10 +625,10 @@
     .contact-card { min-width: unset; width: 100%; max-width: 340px; }
     .edu-stat-row { gap: 28px; }
     .skills-grid { grid-template-columns: 1fr; }
-    .awards-grid { grid-template-columns: repeat(2, 1fr); }
-    .project-gallery { grid-template-columns: 1fr; }
-    .proposals-grid { grid-template-columns: 1fr; }
-    .articles-grid { grid-template-columns: repeat(2, 1fr); }
+    .awards-grid .award-card { width: calc(50% - 10px); }
+    .project-gallery .project-img-card { width: 100%; }
+    .proposals-grid .proposal-card { width: 100%; }
+    .articles-grid .article-card { width: calc(50% - 10px); }
   }
 </style>
 </head>
@@ -643,7 +647,7 @@
 
 <!-- Nav -->
 <nav id="mainNav">
-  <a href="#" class="nav-logo">张煜轩</a>
+  <a href="#" class="nav-logo">暨南大学</a>
   <ul class="nav-links">
     <li><a href="#education">教育</a></li>
     <li><a href="#skills">技能</a></li>
@@ -973,15 +977,7 @@
         <li>负责活动方案设计、宣传推广、物资筹备及现场执行，统筹活动全流程</li>
       </ul>
     </div>
-    <div class="timeline-item reveal reveal-d3">
-      <span class="timeline-date">持续积累</span>
-      <h3 class="timeline-role">互联网产品实践</h3>
-      <p class="timeline-org">独立项目 & 校园产品</p>
-      <ul class="timeline-details">
-        <li>深度互联网从业人员，具备产品规划、需求分析及交互设计能力</li>
-        <li>熟悉产品开发流程，能够独立管控 APP 和 WEB 项目全生命周期</li>
-      </ul>
-    </div>
+
   </div>
 </section>
 
