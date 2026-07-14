@@ -1270,21 +1270,21 @@
 
 <!-- Contact -->
 <section class="section contact-section" id="contact">
-  <div class="reveal">
+  <div>
     <span class="section-number" style="color: var(--accent);">08</span>
     <h2 class="contact-title">期待与你交流</h2>
     <p class="contact-subtitle">如有任何机会或合作意向，欢迎随时联系</p>
   </div>
   <div class="contact-grid">
-    <div class="contact-card reveal reveal-d1">
+    <div class="contact-card">
       <div class="cc-label">Phone</div>
       <div class="cc-value">134 8048 8636</div>
     </div>
-    <div class="contact-card reveal reveal-d2">
+    <div class="contact-card">
       <div class="cc-label">Email</div>
       <div class="cc-value">3486305074@qq.com</div>
     </div>
-    <div class="contact-card reveal reveal-d3">
+    <div class="contact-card">
       <div class="cc-label">Location</div>
       <div class="cc-value">广东省广州市天河区</div>
     </div>
@@ -1503,6 +1503,16 @@
       ease: 'power3.out'
     });
   }
+
+  // ═══ Contact Section Animation ═══
+  gsap.from('.contact-title', {
+    scrollTrigger: { trigger: '.contact-section', start: 'top 80%', once: true },
+    opacity: 0, y: 40, duration: 1, ease: 'power3.out'
+  });
+  gsap.from('.contact-subtitle', {
+    scrollTrigger: { trigger: '.contact-section', start: 'top 80%', once: true },
+    opacity: 0, y: 30, duration: 1, delay: 0.2, ease: 'power3.out'
+  });
 
   // ═══ Contact Cards Stagger ═══
   const contactCards = document.querySelectorAll('.contact-card');
