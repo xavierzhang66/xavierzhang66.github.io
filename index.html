@@ -262,8 +262,11 @@
 
   /* ═══ SKILLS ═══ */
   .skills-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    display: flex; flex-wrap: wrap; justify-content: center;
     gap: 24px; max-width: 1100px; margin: 0 auto;
+  }
+  .skills-grid .skill-card {
+    width: 260px; flex: 0 0 auto;
   }
   .skill-card {
     background: var(--card); backdrop-filter: blur(12px);
@@ -523,6 +526,7 @@
   .contact-grid {
     display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; position: relative; max-width: 900px; margin: 0 auto;
   }
+  .contact-card { flex: 0 0 auto; }
   .contact-card {
     background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
     border-radius: 16px; padding: 28px 36px; text-align: left; min-width: 220px;
@@ -746,7 +750,7 @@
     .contact-grid { flex-direction: column; align-items: center; }
     .contact-card { min-width: unset; width: 100%; max-width: 340px; }
     .edu-stat-row { gap: 28px; }
-    .skills-grid { grid-template-columns: 1fr; }
+    .skills-grid .skill-card { width: 100%; }
     .awards-grid .award-card { width: calc(50% - 10px); }
     .project-gallery .project-img-card { width: 100%; }
     .proposals-grid .proposal-card { width: 100%; }
@@ -1046,7 +1050,7 @@
     <div class="section-line"></div>
   </div>
   <div class="timeline-section">
-    <div class="timeline-item reveal">
+    <div class="timeline-item">
       <span class="timeline-date">2024.06 — 2024.09</span>
       <h3 class="timeline-role">人事行政实习生</h3>
       <p class="timeline-org">东莞市日昌精密电子有限公司（Nitto 中国）· HR&AD</p>
@@ -1072,7 +1076,7 @@
         </div>
       </div>
     </div>
-    <div class="timeline-item reveal reveal-d1">
+    <div class="timeline-item">
       <span class="timeline-date">2023.09 — 2025.07</span>
       <h3 class="timeline-role">学生代表团副团长</h3>
       <p class="timeline-org">暨南大学华文学院学生代表团</p>
@@ -1102,7 +1106,7 @@
         </div>
       </div>
     </div>
-    <div class="timeline-item reveal reveal-d2">
+    <div class="timeline-item">
       <span class="timeline-date">2024.09 — 2025.06</span>
       <h3 class="timeline-role">文体部干事</h3>
       <p class="timeline-org">暨南大学华文学院团总支</p>
